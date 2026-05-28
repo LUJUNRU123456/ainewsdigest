@@ -1,0 +1,211 @@
+# ============================================================
+#  信源配置文件 — 控制"去哪里搜什么"
+# ============================================================
+#  改法说明：
+#    - 加关键词：在对应分类的 keywords_en/keywords_zh 里加一行
+#    - 删关键词：删掉那一行，或者行首加 # 注释掉
+#    - 加 RSS：在 rss_feeds 里加一段
+#    - 加分类：复制一整段 search_group，改 label
+#    - 排除词：把不想看到的关键词加到 exclude_keywords 里
+# ============================================================
+
+# --- 搜索分组 -------------------------------------------------
+#  每次运行会按以下分组逐组搜索
+#  每组里的关键词会分别去 Google 搜
+#  英文关键词和中文关键词都会搜，结果合并
+search_groups:
+
+  # ======== 融资并购 ========
+  funding_ma:
+    label: "融资并购"
+    # 显示在邮件中的板块标题
+    weight: high
+    # 优先级：high / medium / low
+    # high = 搜更多条，low = 搜少一点节省时间
+
+    keywords_en:
+      # 英文搜索关键词（每条单独搜一次）
+      - "AI startup funding investment acquisition 2026"
+      - "artificial intelligence venture capital Series A funding round"
+      - "AI company merger acquisition deal billion"
+      - "AI chip company funding investment"
+      - "data center infrastructure investment funding"
+
+    keywords_zh:
+      # 中文搜索关键词（每条单独搜一次）
+      - "AI 融资 投资 并购 2026"
+      - "人工智能 风险投资 收购 亿美元"
+      - "大模型 融资 估值"
+      - "AI 芯片 公司 融资"
+
+  # ======== 政策监管 ========
+  policy_regulation:
+    label: "政策监管"
+    weight: high
+
+    keywords_en:
+      - "AI regulation policy export control chip ban 2026"
+      - "artificial intelligence governance law legislation"
+      - "US China AI chip export restriction"
+      - "EU AI Act enforcement implementation"
+      - "AI safety regulation government"
+
+    keywords_zh:
+      - "AI 监管 政策 出口管制 芯片禁令"
+      - "人工智能 立法 数据合规"
+      - "美国 对华 芯片 限制"
+      - "欧盟 AI 法案"
+
+  # ======== 算力基础设施（含芯片、数据中心、存储） ========
+  compute_infrastructure:
+    label: "算力基础设施"
+    weight: high
+
+    keywords_en:
+      # 芯片/半导体
+      - "NVIDIA Blackwell GPU AI chip production supply 2026"
+      - "AMD Intel AI accelerator chip data center"
+      - "TSMC Samsung advanced packaging AI chip manufacturing"
+      - "HBM memory AI supply shortage SK Hynix Micron"
+      # 数据中心
+      - "data center AI hyperscaler expansion construction 2026"
+      - "AI data center liquid cooling power infrastructure"
+      # 存储
+      - "HBM3e HBM4 memory AI training inference bandwidth"
+
+    keywords_zh:
+      # 芯片/半导体
+      - "英伟达 GPU AI 芯片 供应 产能"
+      - "华为 昇腾 AI 芯片"
+      - "台积电 先进封装 AI 芯片 代工"
+      - "寒武纪 海光 国产 AI 芯片"
+      # 数据中心
+      - "数据中心 AI 超大规模 扩建 新建"
+      - "液冷 服务器 AI 算力"
+      # 存储
+      - "HBM 高带宽内存 存储 AI"
+
+  # ======== 电力/能源 ========
+  energy:
+    label: "能源转型"
+    weight: high
+
+    keywords_en:
+      - "AI data center power demand electricity grid 2026"
+      - "nuclear SMR small modular reactor data center power"
+      - "Microsoft Google Amazon nuclear energy deal AI"
+      - "renewable energy solar wind data center AI"
+      - "AI electricity consumption forecast grid capacity"
+
+    keywords_zh:
+      - "AI 数据中心 电力 用电 需求"
+      - "核能 小型核反应堆 数据中心 供电"
+      - "可再生能源 光伏 风电 AI 算力"
+      - "电网 容量 AI 数据中心 能耗"
+
+  # ======== AI 应用落地 ========
+  ai_application:
+    label: "AI 应用落地"
+    weight: medium
+    # 优先级设为 medium，因为应用类新闻量大但投资信号相对弱
+
+    keywords_en:
+      - "AI application healthcare diagnosis deployment 2026"
+      - "AI financial services trading risk management"
+      - "AI manufacturing industrial automation deployment"
+      - "enterprise AI adoption ROI case study"
+      - "AI agent enterprise software deployment"
+
+    keywords_zh:
+      - "AI 医疗 诊断 应用 落地"
+      - "AI 金融 风控 量化"
+      - "AI 制造 工业 自动化"
+      - "大模型 企业 落地 案例"
+
+  # ======== AI 公司动态（有大事才触发，优先级低）=======
+  ai_company_news:
+    label: "AI 公司动态"
+    weight: low
+    # 大公司战略/人事变动，不是每天都有值得看的
+
+    keywords_en:
+      - "OpenAI Google DeepMind Anthropic strategy product launch"
+      - "Meta AI Microsoft AI division restructuring"
+      - "AI company layoff hiring expansion"
+      - "big tech earnings AI revenue growth"
+
+    keywords_zh:
+      - "OpenAI 谷歌 Anthropic 战略 产品"
+      - "AI 公司 裁员 招聘 扩张"
+      - "科技巨头 财报 AI 收入"
+
+  # ======== 宏观背景（有大事才触发，优先级低）=======
+  macro_background:
+    label: "宏观与地缘"
+    weight: low
+
+    keywords_en:
+      - "US China technology decoupling AI semiconductor"
+      - "AI talent migration hiring market"
+      - "big tech capital expenditure AI infrastructure 2026"
+
+    keywords_zh:
+      - "中美 科技 脱钩 AI 半导体 地缘"
+      - "AI 人才 就业 市场"
+
+# --- RSS 源 ---------------------------------------------------
+#  除了上面关键词搜索，还会从以下 RSS 源直接抓取
+#  加源：复制下面一段，改 url 和 category
+#  删源：删掉那一段，或者行首加 # 注释掉
+rss_feeds:
+  # 中文源
+  - url: "https://36kr.com/feed"
+    category: "funding_ma"
+    # 36氪 — 创投/融资消息
+
+  - url: "https://rss.huxiu.com/"
+    category: "ai_industry"
+    # 虎嗅 — AI 产业分析
+
+  - url: "https://www.jiqizhixin.com/rss"
+    category: "ai_industry"
+    # 机器之心 — AI 技术动态
+
+  # 英文源
+  - url: "https://venturebeat.com/category/ai/feed/"
+    category: "ai_industry"
+    # VentureBeat — AI 行业新闻
+
+  - url: "https://techcrunch.com/category/artificial-intelligence/feed/"
+    category: "funding_ma"
+    # TechCrunch — 科技创投（融资消息多）
+
+  - url: "https://www.technologyreview.com/tag/artificial-intelligence/feed/"
+    category: "ai_industry"
+    # MIT Technology Review — AI 深度报道
+
+# --- 排除关键词 -----------------------------------------------
+#  标题或摘要里包含以下任一关键词的新闻，自动丢弃
+#  加排除词：新起一行，格式 "- "关键词""
+#  删排除词：删掉那行或前面加 #
+exclude_keywords:
+  - "crypto"
+  - "bitcoin"
+  - "blockchain"
+  - "NFT"
+  - "metaverse"
+  - "video game"
+  - "esports"
+  - "cryptocurrency"
+  - "DeFi"
+  - "meme coin"
+
+# --- 搜索设置 -------------------------------------------------
+search_settings:
+  results_per_keyword: 8
+  # 每个关键词搜多少条结果
+  # 设太大消耗 token（也消耗你的 API 额度），建议 5-10
+
+  max_total_articles: 60
+  # 所有来源加在一起最多处理多少条（去重前）
+  # 设太大运行时间变长，建议 40-80

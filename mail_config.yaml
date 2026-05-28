@@ -1,0 +1,246 @@
+# ============================================================
+#  邮件配置文件 — 控制"发给谁、怎么发、长什么样"
+# ============================================================
+#  改法说明：
+#    - 收件人：在 recipients 下面加一行 email
+#    - 发件人：改 sender_email
+#    - 邮件标题：改 subject_prefix
+#    - 换发信服务：改 smtp 段（Brevo 免费 300 封/天，一般不用换）
+#    - 改配色/字体/排版：改 style 段
+# ============================================================
+
+# --- 发信服务（Brevo SMTP 中转）-------------------------------
+#  Brevo 免费额度：300 封邮件/天，个人用完全足够
+#  换其他服务：改 server / port / username 即可
+smtp:
+  server: "smtp-relay.brevo.com"
+  # Brevo 的 SMTP 服务器地址，不要改
+  # 换成别的服务才需要改（如 smtp.qq.com / smtp.gmail.com）
+
+  port: 587
+  # Brevo = 587（STARTTLS），一般不用改
+
+  username: "your-brevo-login@smtp-brevo.com"
+  # ← 改成你在 Brevo 后台看到的 SMTP Login（不是你的邮箱地址）
+  # 在 Brevo 后台 → SMTP & API → SMTP Keys 页面查看
+
+  sender_email: "your-email@example.com"
+  # ← 改成你的发件邮箱地址
+  # 需要在 Brevo 后台完成验证才能发信
+
+  sender_name: "AI 产业情报日报"
+  # ← 收件人看到的发件人名称，可以随便改
+
+# --- Brevo SMTP 密钥 -------------------------------------------
+#  重要：请勿把密钥直接写在这里！
+#  密钥存放在环境变量 EMAIL_PASSWORD 中
+#  设置方法（选一种）：
+#    方法1：在终端执行 export EMAIL_PASSWORD="你的SMTP密钥"
+#    方法2：写入 ~/.claude/settings.json 的 env 字段
+#
+#  获取 Brevo SMTP 密钥：
+#    1. 打开 https://app.brevo.com
+#    2. 注册并验证发件邮箱（免费，不需要绑卡）
+#    3. 左侧菜单 → SMTP & API → SMTP Keys
+#    4. 点击 "Generate a new SMTP key"
+#    5. 复制那串 xsmtpsib- 开头的密钥
+#    6. 粘贴到上面的环境变量里
+
+# --- 收件人 ---------------------------------------------------
+#  每天邮件发给谁
+#  加人：新起一行，格式 "- "邮箱地址""
+#  删人：删掉那行，或者前面加 #
+recipients:
+  - "your-email@example.com"
+  # ← 改成你的收件邮箱
+  # 可以加多个：
+  # - "friend@qq.com"
+  # - "colleague@gmail.com"
+
+# --- 邮件外观 -------------------------------------------------
+email_settings:
+
+  subject_prefix: "AI 产业情报"
+  # 邮件标题前缀，后面会自动加上日期
+  # 最终效果如：AI 产业情报 | 2026年5月29日 周四
+  # 可以改成你喜欢的名字，比如 "AI 投资日报" "算力情报"
+
+  language: "zh-CN"
+  # 邮件正文语言
+  # zh-CN = 简体中文
+  # en    = 英文
+
+  template: "deep_analysis"
+  # 邮件模板风格
+  # deep_analysis = C 类深度分析（重点新闻 200-300 字 + 历史对照）
+
+  max_articles_in_email: 20
+  # 邮件里最多放多少条新闻
+  # 建议 15-25
+
+  show_scoring_details: false
+  # 是否在邮件里显示每条新闻的评分明细
+  # true = 显示（适合调参阶段），false = 不显示（正式使用）
+
+# --- 邮件视觉风格 -----------------------------------------------
+#  改配色、字体、间距、圆角等，全在这里
+#  改法：改等号右边的值即可。颜色用十六进制码（#RRGGBB）
+style:
+
+  # ===== 全局配色 =====
+  colors:
+    page_background: "#f4f5f7"
+    # 邮件外层背景色
+
+    email_background: "#ffffff"
+    # 邮件内容区背景色
+
+    header_background: "#1a1a2e"
+    # 邮件顶部标题栏背景色
+    # 换暗蓝 → "#0d1b2a"，换深绿 → "#1b4332"，换深灰 → "#212529"
+
+    header_text: "#ffffff"
+    # 顶部标题栏文字颜色
+
+    primary_text: "#2c3e50"
+    # 正文主文字颜色
+
+    secondary_text: "#6c757d"
+    # 辅助文字颜色（来源、日期）
+
+    accent: "#2563eb"
+    # 强调色（链接、重点标记）
+    # 换暖色 → "#e07b39"，换墨绿 → "#0f766e"，换紫色 → "#7c3aed"
+
+    deep_analysis_border: "#2563eb"
+    # 深度分析条目左侧竖线颜色
+
+    history_box_background: "#f0f4ff"
+    # 历史对照框背景色
+    # 想偏灰 → "#f1f3f5"，想偏暖 → "#fef7ed"
+
+    history_box_border: "#dbeafe"
+    # 历史对照框边框色
+
+    brief_divider: "#e5e7eb"
+    # 简报条目之间的分隔线颜色
+
+    button_background: "#2563eb"
+    # "阅读原文"按钮背景色
+
+    button_text: "#ffffff"
+    # "阅读原文"按钮文字颜色
+
+    footer_background: "#f8f9fa"
+    # 邮件底部背景色
+
+    footer_text: "#9ca3af"
+    # 邮件底部文字颜色
+
+    score_badge_high: "#059669"
+    # ≥7.5 分标签颜色（深绿色）
+
+    score_badge_medium: "#d97706"
+    # 4.0-7.4 分标签颜色（橙色）
+
+    category_tag_background: "#eef2ff"
+    # 分类标签背景色
+
+    category_tag_text: "#4338ca"
+    # 分类标签文字色
+
+    link_color: "#2563eb"
+    # 文中超链接颜色
+
+  # ===== 字体 =====
+  typography:
+    font_family: >
+      -apple-system, BlinkMacSystemFont, "Segoe UI",
+      "PingFang SC", "Microsoft YaHei", "Helvetica Neue",
+      Arial, sans-serif
+    # 字体栈（按优先级，系统缺第一个就用第二个）
+    # 苹果风格 → "PingFang SC, Hiragino Sans GB, sans-serif"
+    # Windows 风格 → "Microsoft YaHei, SimHei, sans-serif"
+    # 衬线体 → "Noto Serif SC, Georgia, serif"
+
+    header_title_size: "22px"
+    # 顶部大标题字号
+
+    header_title_weight: "700"
+    # 顶部大标题粗细（400=正常 500=中等 700=粗体）
+
+    header_subtitle_size: "14px"
+    # 顶部副标题字号
+
+    section_title_size: "17px"
+    # 板块标题字号
+
+    section_title_weight: "600"
+    # 板块标题粗细
+
+    article_title_size: "15px"
+    # 新闻标题字号
+
+    article_title_weight: "600"
+    # 新闻标题粗细
+
+    body_text_size: "14px"
+    # 正文字号
+
+    body_line_height: "1.7"
+    # 正文行高（1.5=紧凑 1.7=舒适 2.0=松散）
+
+    small_text_size: "12px"
+    # 小字（来源、日期、页脚）字号
+
+  # ===== 布局 =====
+  layout:
+    email_max_width: "620px"
+    # 邮件最大宽度，建议 560-680px
+
+    content_padding: "28px"
+    # 内容区左右内边距
+
+    article_spacing: "24px"
+    # 新闻条目间距
+
+    section_spacing: "32px"
+    # 板块间距
+
+    border_radius: "6px"
+    # 全局圆角大小
+    # 0 = 直角，4-8px = 微圆，12px+ = 大圆角
+
+    deep_analysis_left_border_width: "4px"
+    # 深度分析条目左侧标记线宽度
+
+    history_box_border_radius: "4px"
+    # 历史对照框圆角
+
+    button_border_radius: "4px"
+    # "阅读原文"按钮圆角
+
+  # ===== 组件细节 =====
+  components:
+    show_header_divider: true
+    # 顶部标题栏下方分隔线，true=要 false=不要
+
+    show_footer_logo: false
+    # 邮件底部是否显示标识，true=显示 false=不显示
+
+    category_tag_style: "pill"
+    # 分类标签形状："pill"=胶囊形 "square"=方形 "dot"=小圆点+文字
+
+    score_badge_position: "inline"
+    # 评分标签位置："inline"=标题后 "corner"=右上角浮动 "hidden"=不显示
+
+    history_box_collapsed: false
+    # 历史对照框默认是否折叠，true=折叠 false=展开
+
+    deep_analysis_separator: "line"
+    # 条目分隔方式："line"=细线 "space"=纯空白
+
+# --- 发送时机 -------------------------------------------------
+auto_send: false
+# false = 手动触发（默认）
+# true  = 配合 cron hook 自动发送（需要额外配置）
